@@ -48,18 +48,22 @@ async function uploadFile(){
 
 // ---------- LOAD FILES ----------
 async function loadAll(){
-  const folder=await getFolder();
-  const r=await fetch(`https://www.googleapis.com/drive/v3/files?q='${folder}'+in+parents`,
-  {headers:{Authorization:"Bearer "+accessToken}});
-  const data=await r.json();
+  const folder = await getFolder();
 
-  docs.innerHTML="";
+  const r = await fetch(
+    `https://www.googleapis.com/drive/v3/files?q='${folder}'+in+parents&fields=files(id,name,mimeType)&pageSize=1000`,
+    { headers: { Authorization: "Bearer " + accessToken } }
+  );
 
-  data.files.forEach(f=>{
-    if(f.name.endsWith(".json")){
+  const data = await r.json();
+
+  docs.innerHTML = "";
+
+  data.files.forEach(f => {
+    if (f.name.endsWith(".json")) {
       loadCardsFromFile(f.id);
-    }else{
-      docs.innerHTML+=`
+    } else {
+      docs.innerHTML += `
         <div class="doc">
           <span>📄 ${f.name}</span>
           <div>
@@ -111,3 +115,4 @@ async function loadCardsFromFile(id){
       </div>`;
   });
 }
+
