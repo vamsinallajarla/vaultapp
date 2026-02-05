@@ -1,77 +1,112 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AI Vault</title>
+<title>AI Wallet Vault</title>
 
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <style>
 body{
   margin:0;
-  font-family:Segoe UI, sans-serif;
+  font-family:'Segoe UI',sans-serif;
   background:linear-gradient(135deg,#0f172a,#1e293b);
   color:white;
-  text-align:center;
 }
-header{padding:25px;font-size:28px;font-weight:600;}
-button{
-  padding:12px 20px;
-  border-radius:8px;
+header{
+  padding:20px;
+  text-align:center;
+  font-size:26px;
+  font-weight:600;
+}
+
+/* Glossy button */
+.glossy{
+  background:linear-gradient(145deg,#3b82f6,#1e40af);
   border:none;
-  background:#3b82f6;
+  padding:10px 18px;
+  border-radius:10px;
   color:white;
   cursor:pointer;
+  box-shadow:0 6px 15px rgba(59,130,246,.5);
 }
-#dashboard{display:none;margin-top:30px;}
-.card{
-  background:rgba(255,255,255,0.08);
-  margin:20px auto;
+
+#wallet{display:none;padding:20px;}
+
+.section{margin-bottom:30px;}
+
+.wallet-card{
+  height:160px;
+  border-radius:18px;
   padding:20px;
-  width:300px;
-  border-radius:12px;
+  background:linear-gradient(135deg,#1e40af,#3b82f6);
+  margin-bottom:15px;
 }
-input{width:90%;padding:8px;margin-top:8px;border-radius:6px;border:none;}
+
+.file-item{
+  background:rgba(255,255,255,0.08);
+  padding:10px;
+  border-radius:8px;
+  margin-top:8px;
+  cursor:pointer;
+}
+
+#viewerModal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  justify-content:center;
+  align-items:center;
+}
+
+#viewerContent{
+  width:80%;
+  height:80%;
+  background:white;
+  border-radius:10px;
+  overflow:hidden;
+}
 </style>
 </head>
 
 <body>
 
-<header>🔐 AI Personal Vault</header>
+<header>💳 AI Wallet Vault</header>
 
 <div id="loginDiv">
   <div id="g_id_onload"
-     data-client_id="840290523953-u9jdtr6m7hqqebogn50iit029qpuc868.apps.googleusercontent.com"
-     data-context="signin"
-     data-ux_mode="popup"
-     data-callback="handleCredentialResponse"
-     data-auto_prompt="false">
-</div>
-  <div class="g_id_signin" data-type="standard"></div>
+       data-client_id="840290523953-u9jdtr6m7hqqebogn50iit029qpuc868.apps.googleusercontent.com"
+       data-context="signin"
+       data-ux_mode="popup"
+       data-callback="handleCredentialResponse">
+  </div>
+  <div class="g_id_signin"></div>
 </div>
 
-<div id="dashboard">
+<div id="wallet">
 
-  <div class="card">
-    <h3>Upload Document</h3>
+  <div class="section">
+    <h3>📂 Documents</h3>
     <input type="file" id="fileInput"/>
-    <button onclick="uploadDoc()">Upload</button>
+    <button class="glossy" onclick="uploadDoc()">Upload</button>
+    <div id="fileList"></div>
   </div>
 
-  <div class="card">
-    <h3>EMI Calculator</h3>
-    <input id="p" placeholder="Principal"/>
-    <input id="r" placeholder="Rate %"/>
-    <input id="n" placeholder="Months"/>
-    <button onclick="calcEMI()">Calculate</button>
-    <div id="emiResult"></div>
+  <div class="section">
+    <h3>💳 Cards</h3>
+    <div id="cardStack"></div>
+    <button class="glossy" onclick="openCardModal()">Add Card</button>
   </div>
 
+</div>
+
+<!-- Viewer -->
+<div id="viewerModal" onclick="this.style.display='none'">
+  <div id="viewerContent"></div>
 </div>
 
 <script src="script.js"></script>
 </body>
 </html>
-
-
