@@ -46,28 +46,26 @@ async function uploadFile(){
   loadAll();
 }
 
-// ---------- LOAD ----------
+// ---------- LOAD FILES ----------
 async function loadAll(){
   const folder=await getFolder();
   const r=await fetch(`https://www.googleapis.com/drive/v3/files?q='${folder}'+in+parents`,
   {headers:{Authorization:"Bearer "+accessToken}});
-  const files=await r.json();
+  const data=await r.json();
 
-  photos.innerHTML="";
   docs.innerHTML="";
 
-  files.files.forEach(f=>{
-    if(f.mimeType.includes("image")){
-      photos.innerHTML+=`
-        <div class="photo" onclick="openFile('${f.id}')">
-          <img src="https://drive.google.com/thumbnail?id=${f.id}">
-        </div>`;
-    }else if(f.name.endsWith(".json")){
+  data.files.forEach(f=>{
+    if(f.name.endsWith(".json")){
       loadCardsFromFile(f.id);
     }else{
       docs.innerHTML+=`
-        <div class="doc" onclick="openFile('${f.id}')">
-          📄 ${f.name}
+        <div class="doc">
+          <span>📄 ${f.name}</span>
+          <div>
+            <button class="open" onclick="openFile('${f.id}')">Open</button>
+            <button class="delete" onclick="deleteFile('${f.id}')">Delete</button>
+          </div>
         </div>`;
     }
   });
@@ -86,6 +84,16 @@ async function openFile(id){
     viewer.innerHTML=`<iframe src="${url}"></iframe>`;
 
   viewer.style.display="block";
+}
+
+// ---------- DELETE ----------
+async function deleteFile(id){
+  if(!confirm("Delete this file?")) return;
+  await fetch(`https://www.googleapis.com/drive/v3/files/${id}`,{
+    method:"DELETE",
+    headers:{Authorization:"Bearer "+accessToken}
+  });
+  loadAll();
 }
 
 // ---------- CARDS ----------
