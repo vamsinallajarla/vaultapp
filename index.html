@@ -3,109 +3,128 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AI Wallet Vault</title>
-
+<title>AI Vault</title>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <style>
 body{
   margin:0;
-  font-family:'Segoe UI',sans-serif;
-  background:linear-gradient(135deg,#0f172a,#1e293b);
+  font-family:Segoe UI, sans-serif;
+  background:linear-gradient(120deg,#0f172a,#1e293b);
   color:white;
 }
 header{
   padding:20px;
-  text-align:center;
   font-size:26px;
   font-weight:600;
+  text-align:center;
 }
 
-/* Glossy button */
-.glossy{
-  background:linear-gradient(145deg,#3b82f6,#1e40af);
-  border:none;
-  padding:10px 18px;
+/* Sections */
+.section{
+  margin:25px;
+  padding:20px;
+  background:rgba(255,255,255,0.05);
+  border-radius:16px;
+  backdrop-filter:blur(10px);
+}
+
+/* Photos Grid */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+  gap:12px;
+}
+.photo{
+  height:110px;
+  border-radius:12px;
+  overflow:hidden;
+}
+.photo img{width:100%;height:100%;object-fit:cover;}
+
+/* Docs */
+.doc{
+  background:#1e293b;
+  padding:15px;
   border-radius:10px;
-  color:white;
+  text-align:center;
+  font-size:14px;
   cursor:pointer;
-  box-shadow:0 6px 15px rgba(59,130,246,.5);
 }
 
-#wallet{display:none;padding:20px;}
-
-.section{margin-bottom:30px;}
-
-.wallet-card{
+/* Cards */
+.card{
   height:160px;
   border-radius:18px;
   padding:20px;
-  background:linear-gradient(135deg,#1e40af,#3b82f6);
-  margin-bottom:15px;
+  margin-bottom:12px;
+  background:linear-gradient(135deg,#2563eb,#1e40af);
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
 }
 
-.file-item{
-  background:rgba(255,255,255,0.08);
-  padding:10px;
+button{
+  padding:8px 14px;
+  border:none;
   border-radius:8px;
-  margin-top:8px;
+  background:#3b82f6;
+  color:white;
   cursor:pointer;
 }
 
-#viewerModal{
+#viewer{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.8);
-  justify-content:center;
-  align-items:center;
+  background:rgba(0,0,0,0.8);
 }
-
-#viewerContent{
-  width:80%;
-  height:80%;
-  background:white;
+#viewer iframe,#viewer img{
+  width:90%;
+  height:90%;
+  margin:5%;
   border-radius:10px;
-  overflow:hidden;
+  border:none;
 }
 </style>
 </head>
 
 <body>
 
-<header>💳 AI Wallet Vault</header>
+<header>☁️ AI Vault</header>
 
 <div id="loginDiv">
   <div id="g_id_onload"
        data-client_id="840290523953-u9jdtr6m7hqqebogn50iit029qpuc868.apps.googleusercontent.com"
-       data-context="signin"
-       data-ux_mode="popup"
-       data-callback="handleCredentialResponse">
+       data-callback="handleCredentialResponse"
+       data-ux_mode="popup">
   </div>
   <div class="g_id_signin"></div>
 </div>
 
-<div id="wallet">
+<div id="app" style="display:none">
 
   <div class="section">
-    <h3>📂 Documents</h3>
-    <input type="file" id="fileInput"/>
-    <button class="glossy" onclick="uploadDoc()">Upload</button>
-    <div id="fileList"></div>
+    <h3>🖼 Photos</h3>
+    <div id="photos" class="grid"></div>
+  </div>
+
+  <div class="section">
+    <h3>📄 Documents</h3>
+    <div id="docs" class="grid"></div>
   </div>
 
   <div class="section">
     <h3>💳 Cards</h3>
-    <div id="cardStack"></div>
-    <button class="glossy" onclick="openCardModal()">Add Card</button>
+    <div id="cards"></div>
+  </div>
+
+  <div class="section">
+    <input type="file" id="fileInput"/>
+    <button onclick="uploadFile()">Upload</button>
   </div>
 
 </div>
 
-<!-- Viewer -->
-<div id="viewerModal" onclick="this.style.display='none'">
-  <div id="viewerContent"></div>
-</div>
+<div id="viewer" onclick="this.style.display='none'"></div>
 
 <script src="script.js"></script>
 </body>
