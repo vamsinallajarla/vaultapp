@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="google-signin-client_id" content="840290523953-u9jdtr6m7hqqebogn50iit029qpuc868.apps.googleusercontent.com">
+<title>AI Vault</title>
+
+<script src="https://apis.google.com/js/api.js"></script>
+
+<style>
+body{
+  margin:0;
+  font-family: 'Segoe UI',sans-serif;
+  background: linear-gradient(135deg,#0f172a,#1e293b);
+  color:white;
+}
+header{
+  padding:20px;
+  text-align:center;
+  font-size:28px;
+  font-weight:600;
+}
+.container{
+  display:flex;
+  gap:20px;
+  justify-content:center;
+  flex-wrap:wrap;
+  padding:20px;
+}
+.card{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  border-radius:14px;
+  padding:20px;
+  width:320px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  transition:.3s;
+}
+.card:hover{ transform: translateY(-5px); }
+button{
+  background:#3b82f6;
+  border:none;
+  padding:10px 16px;
+  border-radius:8px;
+  color:white;
+  cursor:pointer;
+  margin-top:10px;
+}
+input{
+  width:100%;
+  padding:8px;
+  border-radius:6px;
+  border:none;
+  margin-top:6px;
+}
+#dashboard{ display:none; }
+#emiResult{ font-weight:600; margin-top:10px; }
+</style>
+</head>
+
+<body>
+
+<header>🔐 AI Personal Vault</header>
+
+<div style="text-align:center">
+  <button id="loginBtn">Login with Google</button>
+</div>
+
+<div id="dashboard" class="container">
+
+  <div class="card">
+    <h3>📂 Upload Document</h3>
+    <input type="file" id="fileInput"/>
+    <button onclick="uploadDoc()">Upload</button>
+  </div>
+
+  <div class="card">
+    <h3>💳 Save Card</h3>
+    <input id="cardName" placeholder="Card Name"/>
+    <input id="cardNumber" placeholder="Card Number"/>
+    <button onclick="saveCard()">Save</button>
+  </div>
+
+  <div class="card">
+    <h3>🧮 EMI Calculator</h3>
+    <input id="p" placeholder="Principal"/>
+    <input id="r" placeholder="Rate %"/>
+    <input id="n" placeholder="Months"/>
+    <button onclick="calcEMI()">Calculate</button>
+    <div id="emiResult"></div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
