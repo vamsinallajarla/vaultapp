@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI Vault</title>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<style>
+body{
+  margin:0;
+  font-family:Segoe UI, sans-serif;
+  background:linear-gradient(135deg,#0f172a,#1e293b);
+  color:white;
+  text-align:center;
+}
+header{padding:25px;font-size:28px;font-weight:600;}
+button{
+  padding:12px 20px;
+  border-radius:8px;
+  border:none;
+  background:#3b82f6;
+  color:white;
+  cursor:pointer;
+}
+#dashboard{display:none;margin-top:30px;}
+.card{
+  background:rgba(255,255,255,0.08);
+  margin:20px auto;
+  padding:20px;
+  width:300px;
+  border-radius:12px;
+}
+input{width:90%;padding:8px;margin-top:8px;border-radius:6px;border:none;}
+</style>
+</head>
+
+<body>
+
+<header>🔐 AI Personal Vault</header>
+
+<div id="loginDiv">
+  <div id="g_id_onload"
+     data-client_id="840290523953-u9jdtr6m7hqqebogn50iit029qpuc868.apps.googleusercontent.com"
+     data-callback="handleCredentialResponse">
+  </div>
+  <div class="g_id_signin" data-type="standard"></div>
+</div>
+
+<div id="dashboard">
+
+  <div class="card">
+    <h3>Upload Document</h3>
+    <input type="file" id="fileInput"/>
+    <button onclick="uploadDoc()">Upload</button>
+  </div>
+
+  <div class="card">
+    <h3>EMI Calculator</h3>
+    <input id="p" placeholder="Principal"/>
+    <input id="r" placeholder="Rate %"/>
+    <input id="n" placeholder="Months"/>
+    <button onclick="calcEMI()">Calculate</button>
+    <div id="emiResult"></div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
