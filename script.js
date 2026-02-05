@@ -1,23 +1,33 @@
 let accessToken = "";
 
 function handleCredentialResponse(response) {
-  google.accounts.oauth2.initTokenClient({
+  // After user signs in, request Drive permission
+  const tokenClient = google.accounts.oauth2.initTokenClient({
     client_id: "840290523953-u9jdtr6m7hqqebogn50iit029qpuc868.apps.googleusercontent.com",
     scope: "https://www.googleapis.com/auth/drive.file",
     callback: (tokenResponse) => {
       accessToken = tokenResponse.access_token;
+
+      // Show dashboard after token received
       document.getElementById("loginDiv").style.display = "none";
       document.getElementById("dashboard").style.display = "block";
     },
-  }).requestAccessToken();
+  });
+
+  tokenClient.requestAccessToken();
 }
 
 async function uploadDoc() {
+  if (!accessToken) {
+    alert("Login first");
+    return;
+  }
+
   const file = document.getElementById("fileInput").files[0];
 
   const metadata = { name: file.name };
   const form = new FormData();
-  form.append("metadata", new Blob([JSON.stringify(metadata)], {type:"application/json"}));
+  form.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
   form.append("file", file);
 
   await fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
