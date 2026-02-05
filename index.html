@@ -9,24 +9,54 @@
 <style>
 body{
   margin:0;
-  font-family:Segoe UI,sans-serif;
-  background:linear-gradient(120deg,#0f172a,#1e293b);
-  color:white;
+  font-family: Inter, Segoe UI, sans-serif;
+  background:#0b1220;
+  color:#e5e7eb;
 }
+
+/* Header */
 header{
+  padding:22px;
   text-align:center;
-  padding:20px;
-  font-size:24px;
+  font-size:26px;
   font-weight:600;
+  letter-spacing:.5px;
 }
-.section{
-  margin:20px;
+
+/* Layout */
+.container{
+  max-width:900px;
+  margin:auto;
   padding:20px;
-  background:rgba(255,255,255,0.05);
-  border-radius:16px;
 }
+
+.section{
+  background:#111827;
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:25px;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+
+.section h3{
+  margin:0 0 15px 0;
+  font-weight:500;
+}
+
+/* Buttons */
+.btn{
+  background:#2563eb;
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  color:white;
+  cursor:pointer;
+}
+.btn-danger{background:#dc2626;}
+
+/* Documents */
 .doc{
-  background:#1e293b;
+  background:#1f2937;
   padding:12px;
   border-radius:10px;
   margin-bottom:10px;
@@ -34,33 +64,34 @@ header{
   justify-content:space-between;
   align-items:center;
 }
+
+/* Cards */
 .card{
-  height:150px;
+  height:160px;
   border-radius:18px;
   padding:20px;
   margin-bottom:12px;
-  background:linear-gradient(135deg,#2563eb,#1e40af);
+  background:linear-gradient(135deg,#1d4ed8,#2563eb);
+  color:white;
+  font-size:18px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
 }
-button{
-  padding:6px 12px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-}
-.open{background:#3b82f6;color:white;}
-.delete{background:#ef4444;color:white;}
+
+/* Viewer */
 #viewer{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.8);
+  background:rgba(0,0,0,.85);
 }
 #viewer iframe,#viewer img{
   width:90%;
   height:90%;
   margin:5%;
+  border-radius:12px;
   border:none;
-  border-radius:8px;
 }
 </style>
 </head>
@@ -69,7 +100,7 @@ button{
 
 <header>🔐 AI Vault</header>
 
-<div id="loginDiv">
+<div id="loginDiv" style="text-align:center">
   <div id="g_id_onload"
        data-client_id="840290523953-u9jdtr6m7hqqebogn50iit029qpuc868.apps.googleusercontent.com"
        data-callback="handleCredentialResponse"
@@ -77,18 +108,21 @@ button{
   <div class="g_id_signin"></div>
 </div>
 
-<div id="app" style="display:none">
+<div id="app" class="container" style="display:none">
 
+  <!-- Documents -->
   <div class="section">
     <h3>📄 Documents</h3>
     <div id="docs"></div>
     <input type="file" id="fileInput"/>
-    <button class="open" onclick="uploadFile()">Upload</button>
+    <button class="btn" onclick="uploadFile()">Upload</button>
   </div>
 
+  <!-- Cards -->
   <div class="section">
     <h3>💳 Cards</h3>
     <div id="cards"></div>
+    <button class="btn" onclick="addCard()">Add Card</button>
   </div>
 
 </div>
